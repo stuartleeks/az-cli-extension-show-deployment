@@ -1,0 +1,21 @@
+Metadata-Version: 1.1
+Name: myexampleextension
+Version: 0.0.1
+Summary: An Azure CLI Extension.
+Home-page: https://github.com/ORG/REPO
+Author: MY CORP.
+Author-email: example@contoso.com
+License: MIT
+Description: An example Azure CLI Extension.
+Platform: UNKNOWN
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: System Administrators
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 2
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
+Classifier: License :: OSI Approved :: MIT License
