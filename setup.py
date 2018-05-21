@@ -27,7 +27,7 @@ CLASSIFIERS = [
 DEPENDENCIES = []
 
 setup(
-    name='myexampleextension',
+    name='show-deployment',
     version=VERSION,
     description='An Azure CLI Extension.',
     long_description='An example Azure CLI Extension.',

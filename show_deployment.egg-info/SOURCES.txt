@@ -1,0 +1,7 @@
+setup.cfg
+setup.py
+azext_show-deployments/__init__.py
+show_deployment.egg-info/PKG-INFO
+show_deployment.egg-info/SOURCES.txt
+show_deployment.egg-info/dependency_links.txt
+show_deployment.egg-info/top_level.txt

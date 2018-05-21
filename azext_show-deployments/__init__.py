@@ -13,14 +13,14 @@ helps['hello world'] = """
 """
 
 def helloworld():
-    print('Hello World.')
+    print('Hello World!')
 
 
 class HelloWorldCommandsLoader(AzCommandsLoader):
 
     def __init__(self, cli_ctx=None):
         from azure.cli.core.commands import CliCommandType
-        custom_type = CliCommandType(operations_tmpl='azext_myexampleextension#{}')
+        custom_type = CliCommandType(operations_tmpl='azext_show-deployments#{}')
         super(HelloWorldCommandsLoader, self).__init__(cli_ctx=cli_ctx,
                                                        custom_command_type=custom_type)
 

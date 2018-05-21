@@ -1,7 +1,7 @@
 setup.cfg
 setup.py
-azext_myexampleextension/__init__.py
-myexampleextension.egg-info/PKG-INFO
-myexampleextension.egg-info/SOURCES.txt
-myexampleextension.egg-info/dependency_links.txt
-myexampleextension.egg-info/top_level.txt
+azext_show-deployments/__init__.py
+show-deployments.egg-info/PKG-INFO
+show-deployments.egg-info/SOURCES.txt
+show-deployments.egg-info/dependency_links.txt
+show-deployments.egg-info/top_level.txt
