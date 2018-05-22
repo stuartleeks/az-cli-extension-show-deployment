@@ -38,8 +38,9 @@ def watch_deployment(resourcegroupname, deploymentname):
     print ('Deployment: {} ({}) - start {}, duration {}'.format(deploymentname, provisioning_state, timestamp, duration))
 
     cli_operations = cli_as_json(['group', 'deployment', 'operation', 'list', '-g', resourcegroupname, '-n', deploymentname])
-    for cli_operation in cli_operations:
-        operation = Operation(cli_operation)
+    operations = map(Operation, cli_operations) 
+    operations = sorted(operations, key = lambda o: o.timestamp)
+    for operation in operations:
         print('Operation: {}, {}, {}, {}, {}, {}'.format(operation.id, operation.provisioning_state, operation.resource_type, operation.resource_name, operation.timestamp, operation.duration))
 
 
@@ -60,7 +61,6 @@ def load_arguments(self, _):
 # List operations
 # Get child deployments
 # refresh
-# ensure sorting operations to reduce jumping when refreshing
 # colour code output
 # dump outputs when complete
 # default to latest deployment if not specified
