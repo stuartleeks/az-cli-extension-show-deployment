@@ -7,7 +7,7 @@ from knack.help_files import helps
 
 from azure.cli.core import AzCommandsLoader
 
-helps['hello world'] = """
+helps['group deployment watch'] = """
     type: command
     short-summary: Say hello world.
 """
@@ -25,8 +25,8 @@ class HelloWorldCommandsLoader(AzCommandsLoader):
                                                        custom_command_type=custom_type)
 
     def load_command_table(self, args):
-        with self.command_group('hello') as g:
-            g.custom_command('world', 'helloworld')
+        with self.command_group('group deployment') as g:
+            g.custom_command('watch', 'helloworld')
         return self.command_table
 
     def load_arguments(self, _):
