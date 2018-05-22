@@ -29,10 +29,10 @@ DEPENDENCIES = []
 setup(
     name='show-deployment',
     version=VERSION,
-    description='An Azure CLI Extension.',
-    long_description='An example Azure CLI Extension.',
+    description='Watch ARM deployments.',
+    long_description='An Azure CLI Extension to monitor Azure Resource Manager deployments.',
     license='MIT',
-    author='MY CORP.',
+    author='Stuart Leeks',
     author_email='example@contoso.com',
     url='https://github.com/ORG/REPO',
     classifiers=CLASSIFIERS,

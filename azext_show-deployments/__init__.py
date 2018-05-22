@@ -1,35 +1,24 @@
-# --------------------------------------------------------------------------------------------
-# Copyright (c) Microsoft Corporation. All rights reserved.
-# Licensed under the MIT License. See License.txt in the project root for license information.
-# --------------------------------------------------------------------------------------------
- 
-from knack.help_files import helps
+import importlib 
 
 from azure.cli.core import AzCommandsLoader
 
-helps['group deployment watch'] = """
-    type: command
-    short-summary: Say hello world.
-"""
+# Imported modules must implement load_command_table and load_arguments
+module_names = ['watch_deployments']
 
-def watchDeployment():
-    print('Hello World!!')
-
+modules = list(map(importlib.import_module, map(lambda m: '{}.{}'.format('azext_show-deployments', m), module_names)))
 
 class WatchDeploymentCommandsLoader(AzCommandsLoader):
 
     def __init__(self, cli_ctx=None):
-        from azure.cli.core.commands import CliCommandType
-        custom_type = CliCommandType(operations_tmpl='azext_show-deployments#{}')
-        super(WatchDeploymentCommandsLoader, self).__init__(cli_ctx=cli_ctx,
-                                                       custom_command_type=custom_type)
+        super(WatchDeploymentCommandsLoader, self).__init__(cli_ctx=cli_ctx)
 
     def load_command_table(self, args):
-        with self.command_group('group deployment') as g:
-            g.custom_command('watch', 'watchDeployment')
+        for m in modules:
+            m.load_command_table(self, args)
         return self.command_table
 
-    def load_arguments(self, _):
-        pass
+    def load_arguments(self, command):
+        for m in modules:
+            m.load_arguments(self, command)
 
 COMMAND_LOADER_CLS = WatchDeploymentCommandsLoader
