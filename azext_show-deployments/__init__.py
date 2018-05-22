@@ -13,7 +13,7 @@ helps['hello world'] = """
 """
 
 def helloworld():
-    print('Hello World!')
+    print('Hello World!!')
 
 
 class HelloWorldCommandsLoader(AzCommandsLoader):
