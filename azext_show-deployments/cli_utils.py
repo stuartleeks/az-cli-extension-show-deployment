@@ -12,7 +12,7 @@ from knack.util import CLIError
 from knack.log import get_logger
 logger = get_logger(__name__)
 
-EXTENSION_TAG_STRING = 'created_by=image-copy-extension'
+EXTENSION_TAG_STRING = 'created_by=show-deployments'
 
 
 # pylint: disable=inconsistent-return-statements
