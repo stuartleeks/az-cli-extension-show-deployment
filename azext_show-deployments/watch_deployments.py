@@ -10,6 +10,7 @@ from azure.cli.core.commands import CliCommandType
 from azure.cli.core import AzCommandsLoader
 from datetime import datetime, timedelta
 from .cli_utils import *
+from .table_utils import *
 
 
 helps['group deployment watch'] = """
@@ -23,9 +24,6 @@ helps['group deployment watch'] = """
         type: string
         short-summary: The name of the deployment to watch
 """
-
-def pad_and_trunc(value, width):
-    return str(value).ljust(width)[0:width]
 
 def watch_deployment(resourcegroupname, deploymentname):
     deployment = cli_as_json(['group', 'deployment', 'show', '-g', resourcegroupname, '-n', deploymentname])
@@ -46,34 +44,14 @@ def watch_deployment(resourcegroupname, deploymentname):
     cli_operations = cli_as_json(['group', 'deployment', 'operation', 'list', '-g', resourcegroupname, '-n', deploymentname])
     operations = map(Operation, cli_operations) 
     operations = sorted(operations, key = lambda o: o.timestamp)
+
+
     headers = ['State', 'ResourceType', 'ResourceName', 'StartTime', 'Duration']
     operation_rows = map(lambda o: [o.provisioning_state, o.resource_type, o.resource_name, o.timestamp, o.duration], operations)
     operation_rows = [o for o in operation_rows]
 
-    # calculate the column widths
-    widths = [len(h) for h in headers]
-    for row in operation_rows:
-        for i in range(5):
-            widths[i] = max(widths[i], len(str(row[i])))
-
-    print('{} {} {} {} {}'.format(
-            pad_and_trunc(headers[0], widths[0]),
-            pad_and_trunc(headers[1], widths[1]),
-            pad_and_trunc(headers[2], widths[2]),
-            pad_and_trunc(headers[3], widths[3]),
-            pad_and_trunc(headers[4], widths[4])
-        )
-    )
-
-    for operation in operation_rows:
-        print('{} {} {} {} {}'.format(
-                pad_and_trunc(operation[0], widths[0]),
-                pad_and_trunc(operation[1], widths[1]),
-                pad_and_trunc(operation[2], widths[2]),
-                pad_and_trunc(operation[3], widths[3]),
-                pad_and_trunc(operation[4], widths[4])
-            )
-        )
+    table = Table(headers, operation_rows)
+    table.print_table()
 
 
 def load_command_table(self, args):
