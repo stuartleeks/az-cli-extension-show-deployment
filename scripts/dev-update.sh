@@ -1,0 +1,1 @@
+ pip install --upgrade --target ~/.azure/devcliextensions/show-deployment ~/source/azure-cli-extension-show-deployment
