@@ -17,10 +17,10 @@ helps['group deployment watch'] = """
     type: command
     short-summary: Watch an ARM deployment
     parameters:
-        - name: --resource-group -g
+      - name: --resource-group -g
         type: string
         short-summary: The name of the resource group
-        - name: --deployment -n
+      - name: --name -n
         type: string
         short-summary: The name of the deployment to watch
 """
@@ -36,19 +36,10 @@ def color_for_state(state):
 
 
 def watch_deployment(resourcegroupname, deploymentname):
-    deployment = cli_as_json(['group', 'deployment', 'show', '-g', resourcegroupname, '-n', deploymentname])
-    
-    properties = deployment['properties']
-    provisioning_state = properties['provisioningState']
+    cli_deployment = cli_as_json(['group', 'deployment', 'show', '-g', resourcegroupname, '-n', deploymentname])
+    deployment = Deployment(cli_deployment)
 
-    additional_properties = properties['additionalProperties']
-    duration_string = additional_properties['duration']
-    duration = duration_to_timedelta(duration_string)
-    timestamp_string = properties['timestamp']
-    timestamp = timestamp_to_datetime(timestamp_string)
-    starttime = timestamp - duration
-
-    print ('Deployment: {} ({}) - start {}, duration {}'.format(deploymentname, provisioning_state, starttime, duration))
+    print ('Deployment: {} ({}) - start {}, duration {}'.format(deployment.name, deployment.provisioning_state, deployment.start_time, deployment.duration))
     print()
 
     cli_operations = cli_as_json(['group', 'deployment', 'operation', 'list', '-g', resourcegroupname, '-n', deploymentname])

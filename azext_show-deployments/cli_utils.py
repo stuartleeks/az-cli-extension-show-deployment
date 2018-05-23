@@ -105,3 +105,19 @@ class Operation:
         additional_properties = properties['additionalProperties']
         duration_string = additional_properties['duration']
         self.duration = duration_to_timedelta(duration_string)
+
+class Deployment:
+    def __init__(self, deployment):
+        self.id = deployment['id']
+        self.name = deployment['name']
+
+        properties = deployment['properties']
+        self.provisioning_state = properties['provisioningState']
+
+        additional_properties = properties['additionalProperties']
+        duration_string = additional_properties['duration']
+        self.duration = duration_to_timedelta(duration_string)
+        timestamp_string = properties['timestamp']
+        timestamp = timestamp_to_datetime(timestamp_string)
+        self.end_time = timestamp
+        self.start_time = timestamp - self.duration
