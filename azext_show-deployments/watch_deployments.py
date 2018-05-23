@@ -34,15 +34,16 @@ def color_for_state(state):
         return '\033[32m' # green
     return "\033[0m" # reset
 
+def get_deployment_by_name(resource_group_name, deployment_name):
+    cli_deployment = cli_as_json(['group', 'deployment', 'show', '-g', resource_group_name, '-n', deployment_name])
+    return Deployment(cli_deployment)
 
-def watch_deployment(resourcegroupname, deploymentname):
-    cli_deployment = cli_as_json(['group', 'deployment', 'show', '-g', resourcegroupname, '-n', deploymentname])
-    deployment = Deployment(cli_deployment)
-
+def watch_deployment(resource_group_name, deploymentname):
+    deployment = get_deployment_by_name(resource_group_name, deploymentname)
     print ('Deployment: {} ({}) - start {}, duration {}'.format(deployment.name, deployment.provisioning_state, deployment.start_time, deployment.duration))
     print()
 
-    cli_operations = cli_as_json(['group', 'deployment', 'operation', 'list', '-g', resourcegroupname, '-n', deploymentname])
+    cli_operations = cli_as_json(['group', 'deployment', 'operation', 'list', '-g', resource_group_name, '-n', deployment.name])
     operations = sorted(map(Operation, cli_operations) , key = lambda o: o.timestamp)
 
     headers = ['State', 'ResourceType', 'ResourceName', 'StartTime', 'Duration']
@@ -63,7 +64,7 @@ def load_command_table(self, args):
 def load_arguments(self, _):
     with self.argument_context('group deployment watch') as c:
         c.argument('deploymentname', options_list=['--name', '-n']) # TODO - how to add completion?
-        c.argument('resourcegroupname', options_list=['--resource-group', '-g']) # TODO - how to add completion?
+        c.argument('resource_group_name', options_list=['--resource-group', '-g']) # TODO - how to add completion?
 
 
 # TODO
