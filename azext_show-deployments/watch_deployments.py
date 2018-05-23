@@ -38,8 +38,21 @@ def get_deployment_by_name(resource_group_name, deployment_name):
     cli_deployment = cli_as_json(['group', 'deployment', 'show', '-g', resource_group_name, '-n', deployment_name])
     return Deployment(cli_deployment)
 
-def watch_deployment(resource_group_name, deploymentname):
-    deployment = get_deployment_by_name(resource_group_name, deploymentname)
+def get_latest_deployment(resource_group_name):
+    cli_deployments = cli_as_json(['group', 'deployment', 'list', '-g', resource_group_name])
+    deployments = sorted(map(Deployment, cli_deployments) , key = lambda o: o.start_time, reverse = True)
+    return deployments[0]
+
+def watch_deployment(resource_group_name, deploymentname=None):
+    if (deploymentname == None):
+        deployment = get_latest_deployment(resource_group_name)
+    else:
+        deployment = get_deployment_by_name(resource_group_name, deploymentname)
+    
+    if(deployment == None):
+        print ('No deployment found')
+        return
+
     print ('Deployment: {} ({}) - start {}, duration {}'.format(deployment.name, deployment.provisioning_state, deployment.start_time, deployment.duration))
     print()
 
@@ -72,5 +85,4 @@ def load_arguments(self, _):
 # Get child deployments
 # refresh
 # dump outputs when complete
-# default to latest deployment if not specified
 # allow refresh interval to be specified
