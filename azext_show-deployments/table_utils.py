@@ -4,10 +4,7 @@ class Table:
         self.headers = headers
         self.rows = rows
         self.use_last_column_for_color = use_last_column_for_color
-
         self.column_count = len(self.headers)
-        if (use_last_column_for_color):
-            self.column_count = self.column_count - 1
     
     def print_table(self):
         # calculate the column widths
