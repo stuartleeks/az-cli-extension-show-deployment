@@ -5,6 +5,9 @@
 import json
 import re
 import functools
+import time
+import os
+
 from knack.help_files import helps
 from azure.cli.core.commands import CliCommandType
 from azure.cli.core import AzCommandsLoader
@@ -97,13 +100,25 @@ def watch_deployment(resource_group_name, deploymentname=None):
         print ('No deployment found')
         return
 
-    operations = get_operations_for_deployment(resource_group_name, deployment.name)
-    
-    deployments_and_operations = [DeploymentAndOperations(deployment, operations)]
-    deployments_and_operations += get_child_deployments_and_operations(resource_group_name, operations)
+    deploymentname = deployment.name
 
-    for deployment_and_operations in deployments_and_operations:
-        dump_deployment_and_operations(deployment_and_operations)
+    while True:
+        operations = get_operations_for_deployment(resource_group_name, deployment.name)
+        
+        deployments_and_operations = [DeploymentAndOperations(deployment, operations)]
+        deployments_and_operations += get_child_deployments_and_operations(resource_group_name, operations)
+
+        os.system('cls' if os.name == 'nt' else 'clear')
+        for deployment_and_operations in deployments_and_operations:
+            dump_deployment_and_operations(deployment_and_operations)
+        
+        if deployments_and_operations[0].deployment.provisioning_state != "Running":
+            break
+        time.sleep(10)
+
+        # refresh deployment and then loop round...
+        deployment = get_deployment_by_name(resource_group_name, deploymentname)
+
 
 def load_command_table(self, args):
     custom = CliCommandType(operations_tmpl='{}#{{}}'.format(__loader__.name))
@@ -119,6 +134,5 @@ def load_arguments(self, _):
 
 
 # TODO
-# refresh
 # dump outputs when complete
 # allow refresh interval to be specified
