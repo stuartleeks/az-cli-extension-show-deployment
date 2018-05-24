@@ -26,6 +26,9 @@ helps['group deployment watch'] = """
       - name: --name -n
         type: string
         short-summary: The name of the deployment to watch
+      - name: --refresh
+        type: int
+        short-summary: The interval between refreshing the deployment status (in seconds)
 """
 
 def color_for_state(state):
@@ -90,7 +93,8 @@ def get_child_deployments_and_operations(resource_group_name, operations):
     
     return result
 
-def watch_deployment(resource_group_name, deploymentname=None):
+def watch_deployment(resource_group_name, deploymentname=None, refresh_interval=10):
+    refresh_interval = int(refresh_interval)
     if (deploymentname == None):
         deployment = get_latest_deployment(resource_group_name)
     else:
@@ -114,7 +118,7 @@ def watch_deployment(resource_group_name, deploymentname=None):
         
         if deployments_and_operations[0].deployment.provisioning_state != "Running":
             break
-        time.sleep(10)
+        time.sleep(refresh_interval)
 
         # refresh deployment and then loop round...
         deployment = get_deployment_by_name(resource_group_name, deploymentname)
@@ -131,8 +135,8 @@ def load_arguments(self, _):
     with self.argument_context('group deployment watch') as c:
         c.argument('deploymentname', options_list=['--name', '-n']) # TODO - how to add completion?
         c.argument('resource_group_name', options_list=['--resource-group', '-g']) # TODO - how to add completion?
+        c.argument('refresh_interval', options_list=['--refresh'])
 
 
 # TODO
 # dump outputs when complete
-# allow refresh interval to be specified
