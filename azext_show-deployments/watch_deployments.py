@@ -122,10 +122,17 @@ def watch_deployment(resource_group_name, deploymentname=None, refresh_interval=
 
         print()
         print('refreshing...')
-        
+
         # refresh deployment and then loop round...
         deployment = get_deployment_by_name(resource_group_name, deploymentname)
 
+
+    headers = ['Output name', 'Type', 'Value']
+    output_rows = map(lambda o: [o.name, o.type, o.value], deployment.outputs)
+    output_rows = [o for o in output_rows]
+    table = Table(headers, output_rows)
+    table.print_table()
+    print()
 
 def load_command_table(self, args):
     custom = CliCommandType(operations_tmpl='{}#{{}}'.format(__loader__.name))
@@ -139,7 +146,3 @@ def load_arguments(self, _):
         c.argument('deploymentname', options_list=['--name', '-n']) # TODO - how to add completion?
         c.argument('resource_group_name', options_list=['--resource-group', '-g']) # TODO - how to add completion?
         c.argument('refresh_interval', options_list=['--refresh'])
-
-
-# TODO
-# dump outputs when complete

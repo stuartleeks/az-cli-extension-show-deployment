@@ -108,7 +108,7 @@ class Operation:
         self.duration = duration_to_timedelta(duration_string)
         self.end_time = timestamp
         self.start_time = timestamp - self.duration
-        
+
 class Deployment:
     def __init__(self, deployment):
         self.id = deployment['id']
@@ -124,3 +124,17 @@ class Deployment:
         timestamp = timestamp_to_datetime(timestamp_string)
         self.end_time = timestamp
         self.start_time = timestamp - self.duration
+
+        cli_outputs = properties['outputs']
+        self.outputs = []
+        if cli_outputs:
+            for key in cli_outputs.keys():
+                output_entry = cli_outputs[key]
+                output = DeploymentOutput(key, output_entry['type'], output_entry['value'])
+                self.outputs.append(output)
+
+class DeploymentOutput:
+    def __init__(self, name, type, value):
+        self.name = name
+        self.type = type
+        self.value = value
