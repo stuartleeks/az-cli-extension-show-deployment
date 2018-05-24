@@ -120,6 +120,9 @@ def watch_deployment(resource_group_name, deploymentname=None, refresh_interval=
             break
         time.sleep(refresh_interval)
 
+        print()
+        print('refreshing...')
+        
         # refresh deployment and then loop round...
         deployment = get_deployment_by_name(resource_group_name, deploymentname)
 
