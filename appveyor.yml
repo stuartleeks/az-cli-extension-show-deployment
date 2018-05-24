@@ -1,14 +1,4 @@
 # # https://packaging.python.org/guides/supporting-windows-using-appveyor/
-# version: 1.0.{build}
-# skip_non_tags: true
-# image: Ubuntu
-# install:
-# - sh: python -m pip install wheel
-# build_script:
-# - sh: python setup.py bdist_wheel
-# artifacts:
-# - path: dist\*
-
 skip_non_tags: true
 environment:
   matrix:
@@ -21,3 +11,10 @@ build_script:
 artifacts:
   # bdist_wheel puts your built wheel in the dist directory
   - path: dist\*
+deploy:
+- provider: GitHub
+  auth_token:
+    secure: ux+wDa1xjiEw4ZWqCD49D5SMSb7OjNWejQ/yr06+4Dvq410krXA9aybgu+DjQfcL
+  repository: stuartleeks/az-cli-extension-show-deployment
+  artifact: 'dist\*.whl'
+  draft: true
