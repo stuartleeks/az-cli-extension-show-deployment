@@ -35,9 +35,9 @@ def color_for_state(state):
     if state == 'Succeeded':
         return '\033[1;30m' # bright black
     if state == 'Failed':
-        return '\033[31m' # red
+        return '\033[1;31m' # red
     if state == 'Running':
-        return '\033[32m' # green
+        return '\033[1;32m' # green
     return '\033[0m' # reset
 
 def get_deployment_by_name(resource_group_name, deployment_name):

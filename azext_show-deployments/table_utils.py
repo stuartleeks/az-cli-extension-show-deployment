@@ -26,7 +26,11 @@ class Table:
 
         for i in range(self.column_count):
             output += self.pad_and_trunc(row[i], widths[i]) + " "
-        return output
 
+        if (self.use_last_column_for_color):
+            output += '\033[0m' # reset
+
+        return output
+        
     def pad_and_trunc(self, value, width):
         return str(value).ljust(width)[0:width]
