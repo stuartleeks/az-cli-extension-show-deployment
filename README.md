@@ -35,4 +35,6 @@ You can select which deployment to watch by name:
 az group  deployment watch  --resource-group  your-resource-group --name some-deployment
 ```
 
+## See it in action...
 
+![extension in action](docs/az-group-deployment-watch-2.gif)
