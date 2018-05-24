@@ -9,7 +9,7 @@ An extension for the Azure CLI to show ARM deployment progress
 ### Install from the web
 
 ```bash
-az extension add --source https://ci.appveyor.com/api/projects/stuartleeks/az-cli-extension-show-deployment/artifacts/dist/show_deployment-0.0.1-py2.py3-none-any.whl?branch=release
+az extension add --source https://ci.appveyor.com/api/projects/stuartleeks/az-cli-extension-show-deployment/artifacts/dist/show_deployment-0.0.1-py2.py3-none-any.whl
 ```
 
 ### Download and install
