@@ -1,0 +1,11 @@
+# https://packaging.python.org/guides/supporting-windows-using-appveyor/
+version: 1.0.{build}
+skip_non_tags: true
+image: Ubuntu
+install:
+- sh: python -m pip install wheel
+build_script:
+- sh: python setup.py bdist_wheel
+artifacts:
+- path: dist\*
+
