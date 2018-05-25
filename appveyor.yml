@@ -1,4 +1,7 @@
 # # https://packaging.python.org/guides/supporting-windows-using-appveyor/
+branches:
+  only:
+  - release
 # skip_non_tags: true
 environment:
   matrix:
