@@ -9,11 +9,11 @@ An extension for the Azure CLI to show ARM deployment progress
 ### Install from the web
 
 ```bash
-az extension add --source https://ci.appveyor.com/api/projects/stuartleeks/az-cli-extension-show-deployment/artifacts/dist/show_deployment-0.0.1-py2.py3-none-any.whl
+az extension add --source https://ci.appveyor.com/api/projects/stuartleeks/az-cli-extension-show-deployment/artifacts/dist/show_deployment-0.0.2-py2.py3-none-any.whl
 ```
 
 ### Download and install
-The latest release can be downloaded from https://ci.appveyor.com/api/projects/stuartleeks/az-cli-extension-show-deployment/artifacts/dist/show_deployment-0.0.1-py2.py3-none-any.whl?branch=release
+The latest release can be downloaded from https://ci.appveyor.com/api/projects/stuartleeks/az-cli-extension-show-deployment/artifacts/dist/show_deployment-0.0.2-py2.py3-none-any.whl?branch=release
 
 Then run the following (fixing the path to the downloaded file as required)
 
@@ -38,3 +38,10 @@ az group  deployment watch  --resource-group  your-resource-group --name some-de
 ## See it in action...
 
 ![extension in action](docs/az-group-deployment-watch-2.gif)
+
+
+## Changelog
+
+### 2018-05-25 v0.0.2
+
+Fix up duration parsing in az cli response JSON
