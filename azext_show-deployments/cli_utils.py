@@ -103,7 +103,13 @@ class Operation:
             self.resource_type = None
             self.resource_name = None
 
-        duration_string = properties['duration']
+
+        if  'duration' in properties:
+            duration_string = properties['duration']
+        else:
+            additional_properties = properties['additionalProperties']
+            duration_string = additional_properties['duration']
+
         self.duration = duration_to_timedelta(duration_string)
         self.end_time = timestamp
         self.start_time = timestamp - self.duration
@@ -116,7 +122,12 @@ class Deployment:
         properties = deployment['properties']
         self.provisioning_state = properties['provisioningState']
 
-        duration_string = properties['duration']
+        if  'duration' in properties:
+            duration_string = properties['duration']
+        else:
+            additional_properties = properties['additionalProperties']
+            duration_string = additional_properties['duration']
+
         self.duration = duration_to_timedelta(duration_string)
         timestamp_string = properties['timestamp']
         timestamp = timestamp_to_datetime(timestamp_string)
