@@ -106,3 +106,6 @@ ENV/
 
 # Sphinx
 _build/
+
+# Ignore the settings file that the HDI Insights vscode extension currently insists on adding to workspaces with python files!
+*_hdi_settings.json 
