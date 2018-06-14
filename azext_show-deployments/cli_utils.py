@@ -87,6 +87,11 @@ def duration_to_timedelta(duration):
 def timestamp_to_datetime(timestamp):
     return datetime.strptime(timestamp, '%Y-%m-%dT%H:%M:%S.%f+00:00') # formatting from https://docs.python.org/2/library/datetime.html#strftime-strptime-behavior
 
+class OperationError:
+    def __init__ (self, code, message):
+        self.code = code
+        self.message = message
+
 class Operation:
     def __init__ (self, operation):
         self.id = operation['operationId']
@@ -103,6 +108,14 @@ class Operation:
             self.resource_type = None
             self.resource_name = None
 
+        self.error = None
+        status_message = properties['statusMessage']
+        if status_message != None:
+            if 'error' in status_message:
+                status_error = status_message['error']
+                self.error = OperationError(status_error['code'], status_error['message'])
+            elif isinstance(status_message, str):
+                self.error = OperationError(None, status_message)
 
         if  'duration' in properties:
             duration_string = properties['duration']

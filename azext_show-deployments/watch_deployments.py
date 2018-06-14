@@ -31,14 +31,19 @@ helps['group deployment watch'] = """
         short-summary: The interval between refreshing the deployment status (in seconds)
 """
 
+COLOR_RED = '\033[1;31m'
+COLOR_BRIGHT_BLACK = '\033[1;30m'
+COLOR_GREEN = '\033[1;32m'
+COLOR_RESET = '\033[0m'
+
 def color_for_state(state):
     if state == 'Succeeded':
-        return '\033[1;30m' # bright black
+        return COLOR_BRIGHT_BLACK
     if state == 'Failed':
-        return '\033[1;31m' # red
+        return COLOR_RED
     if state == 'Running':
-        return '\033[1;32m' # green
-    return '\033[0m' # reset
+        return COLOR_GREEN
+    return COLOR_RESET
 
 def get_deployment_by_name(resource_group_name, deployment_name):
     cli_deployment = cli_as_json(['group', 'deployment', 'show', '-g', resource_group_name, '-n', deployment_name])
@@ -66,7 +71,21 @@ def dump_deployment_and_operations(deployment_and_operations):
 
     table = Table(headers, operation_rows, use_last_column_for_color=True)
     table.print_table()
-    print('\033[0m') # reset
+    print(COLOR_RESET) # reset
+
+
+    headers = ['ResourceName', 'ErrorCode', 'ErrorMessage']
+    operations_with_errors = filter(
+            lambda o: o.error != None,
+            operations
+        )
+    error_rows = map(lambda o: [o.resource_name, o.error.code, o.error.message, COLOR_RED], operations_with_errors)
+    error_rows = [o for o in error_rows]
+    if len(error_rows) > 0:
+        print ('Errors:')
+        table = Table(headers, error_rows, use_last_column_for_color=True)
+        table.print_table()
+        print(COLOR_RESET) # reset
 
 def get_operations_for_deployment(resource_group_name, deployment_name):
     cli_operations = cli_as_json(['group', 'deployment', 'operation', 'list', '-g', resource_group_name, '-n', deployment_name])
