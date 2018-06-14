@@ -49,8 +49,11 @@ az group  deployment watch  --resource-group  your-resource-group --name some-de
 ![extension in action in Cloud Shell](docs/az-group-deployment-watch-3.gif)
 
 
-
 ## Changelog
+
+### 2018-06-14 v0.0.4
+
+Add output of operation errors
 
 ### 2018-06-06 v0.0.3
 
