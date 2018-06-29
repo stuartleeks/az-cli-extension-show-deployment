@@ -14,3 +14,9 @@ build_script:
 artifacts:
   # bdist_wheel puts your built wheel in the dist directory
   - path: dist\*
+deploy:
+- provider: AzureBlob
+  storage_account_name: azclishowdeployment
+  storage_access_key:
+    secure: bkh5zItfusVvnoZkTeWbdKM4d+fu8qEF71ANO4XhARqaiQT3dlE/KG+mQ6wSLFsU17r6qh6TlhyJytzMwr0ds/iBD6oiepOgSp7+ZsuSsMj3Qib6AHTAjoUmr2/TG9mb
+  container: releases
