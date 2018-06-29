@@ -32,13 +32,13 @@ az extension add --source ~/Downloads/show_deployment-0.0.5-py2.py3-none-any.whl
 To show the status of the latest deployment to `your-resource-group` run:
 
 ```
-az group  deployment watch  --resource-group  your-resource-group
+az group deployment watch --resource-group your-resource-group
 ```
 
 You can select which deployment to watch by name:
 
 ```
-az group  deployment watch  --resource-group  your-resource-group --name some-deployment
+az group deployment watch --resource-group your-resource-group --name some-deployment
 ```
 
 ## See it in action...
