@@ -113,7 +113,13 @@ class Operation:
         if status_message != None:
             if 'error' in status_message:
                 status_error = status_message['error']
-                self.error = OperationError(status_error['code'], status_error['message'])
+                error_message = status_error['message']
+                if 'details' in status_error:
+                    error_details = status_error['details']
+                    for error_detail in error_details:
+                        if 'message' in error_detail:
+                            error_message = error_message + '\n' + error_detail['message']
+                self.error = OperationError(status_error['code'], error_message)
             elif isinstance(status_message, str):
                 self.error = OperationError(None, status_message)
 
