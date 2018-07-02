@@ -51,6 +51,12 @@ az group deployment watch --resource-group your-resource-group --name some-deplo
 
 ## Changelog
 
+### 2018-07-02 v0.0.7
+
+FIX: error if message is string containing 'details' 
+
+Continue to refresh on 'Accepted' state 
+
 ### 2018-06-29 v0.0.06
 
 Add error output for Deployment Output evaluation step
