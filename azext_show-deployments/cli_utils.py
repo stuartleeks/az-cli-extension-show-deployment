@@ -110,8 +110,11 @@ class Operation:
 
         self.error = None
         status_message = properties['statusMessage']
+        
         if status_message != None:
-            if 'error' in status_message:
+            if isinstance(status_message, str):
+                self.error = OperationError(None, status_message)
+            elif 'error' in status_message:
                 status_error = status_message['error']
                 error_message = status_error['message']
                 if 'details' in status_error:
@@ -122,15 +125,15 @@ class Operation:
                 self.error = OperationError(status_error['code'], error_message)
             elif 'details' in status_message:
                 # deployment output is in statusMessage.details rather than statusMessage.error.details!
-                error_message = status_message['message']
+                error_message = ''
+                if 'message' in status_message:
+                    error_message = status_message['message']
                 if 'details' in status_message:
                     error_details = status_message['details']
                     for error_detail in error_details:
                         if 'message' in error_detail:
                             error_message = error_message + '\n' + error_detail['message']
                 self.error = OperationError(status_message['code'], error_message)
-            elif isinstance(status_message, str):
-                self.error = OperationError(None, status_message)
 
 
         if  'duration' in properties:
