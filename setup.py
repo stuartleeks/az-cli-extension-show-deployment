@@ -33,8 +33,8 @@ setup(
     long_description='An Azure CLI Extension to monitor Azure Resource Manager deployments.',
     license='MIT',
     author='Stuart Leeks',
-    author_email='example@contoso.com',
-    url='https://github.com/ORG/REPO',
+    author_email='stuartle@microsoft.com',
+    url='https://github.com/stuartleeks/az-cli-extension-show-deployment',
     classifiers=CLASSIFIERS,
     packages=find_packages(),
     install_requires=DEPENDENCIES
