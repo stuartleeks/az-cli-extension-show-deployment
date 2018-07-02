@@ -50,6 +50,7 @@ def get_deployment_by_name(resource_group_name, deployment_name):
     return Deployment(cli_deployment)
 
 def get_latest_deployment(resource_group_name):
+    # TODO - handle resource group not existing
     cli_deployments = cli_as_json(['group', 'deployment', 'list', '-g', resource_group_name])
     deployments = sorted(map(Deployment, cli_deployments) , key = lambda o: o.start_time, reverse = True)
     return deployments[0] if deployments else None
@@ -135,7 +136,8 @@ def watch_deployment(resource_group_name, deploymentname=None, refresh_interval=
         for deployment_and_operations in deployments_and_operations:
             dump_deployment_and_operations(deployment_and_operations)
         
-        if deployments_and_operations[0].deployment.provisioning_state != "Running":
+        provisioning_state = deployments_and_operations[0].deployment.provisioning_state
+        if provisioning_state != "Running" and provisioning_state != 'Accepted' :
             break
         time.sleep(refresh_interval)
 
