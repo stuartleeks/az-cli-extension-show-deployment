@@ -46,12 +46,12 @@ def color_for_state(state):
     return COLOR_RESET
 
 def get_deployment_by_name(resource_group_name, deployment_name):
-    cli_deployment = cli_as_json(['group', 'deployment', 'show', '-g', resource_group_name, '-n', deployment_name])
+    cli_deployment = cli_as_json(['deployment', 'group', 'show', '-g', resource_group_name, '-n', deployment_name])
     return Deployment(cli_deployment)
 
 def get_latest_deployment(resource_group_name):
     # TODO - handle resource group not existing
-    cli_deployments = cli_as_json(['group', 'deployment', 'list', '-g', resource_group_name])
+    cli_deployments = cli_as_json(['deployment', 'group', 'list', '-g', resource_group_name])
     deployments = sorted(map(Deployment, cli_deployments) , key = lambda o: o.start_time, reverse = True)
     return deployments[0] if deployments else None
 
@@ -89,7 +89,7 @@ def dump_deployment_and_operations(deployment_and_operations):
         print(COLOR_RESET) # reset
 
 def get_operations_for_deployment(resource_group_name, deployment_name):
-    cli_operations = cli_as_json(['group', 'deployment', 'operation', 'list', '-g', resource_group_name, '-n', deployment_name])
+    cli_operations = cli_as_json(['deployment', 'operation', 'group', 'list', '-g', resource_group_name, '-n', deployment_name])
     return sorted(map(Operation, cli_operations) , key = lambda o: o.start_time)
 
 def get_child_deployments_and_operations(resource_group_name, operations):
@@ -159,11 +159,18 @@ def load_command_table(self, args):
     custom = CliCommandType(operations_tmpl='{}#{{}}'.format(__loader__.name))
     with self.command_group('group deployment', custom_command_type=custom) as g:
         g.custom_command('watch', 'watch_deployment')
+    with self.command_group('deployment group', custom_command_type=custom) as g:
+        g.custom_command('watch', 'watch_deployment')
     return self.command_table
 
 
 def load_arguments(self, _):
     with self.argument_context('group deployment watch') as c:
+        c.argument('deploymentname', options_list=['--name', '-n']) # TODO - how to add completion?
+        c.argument('resource_group_name', options_list=['--resource-group', '-g']) # TODO - how to add completion?
+        c.argument('refresh_interval', options_list=['--refresh'])
+
+    with self.argument_context('deployment group watch') as c:
         c.argument('deploymentname', options_list=['--name', '-n']) # TODO - how to add completion?
         c.argument('resource_group_name', options_list=['--resource-group', '-g']) # TODO - how to add completion?
         c.argument('refresh_interval', options_list=['--refresh'])
