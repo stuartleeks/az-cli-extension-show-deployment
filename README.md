@@ -12,7 +12,7 @@ An extension for the Azure CLI to show ARM deployment progress
 To install the extension, simply execute the following `az` command:
 
 ```bash
-az extension add --source https://azclishowdeployment.blob.core.windows.net/releases/dist/show_deployment-0.0.7-py2.py3-none-any.whl
+az extension add --source https://azclishowdeployment.blob.core.windows.net/releases/dist/show_deployment-0.0.9-py2.py3-none-any.whl
 ```
 
 Note if you have previously installed and are updating then uninstall first via `az extension remove --name show-deployment`
@@ -24,7 +24,7 @@ If you prefer, you can download the extension and then install. The latest relea
 Then run the following (fixing the path to the downloaded file as required)
 
 ```bash
-az extension add --source ~/Downloads/show_deployment-0.0.7-py2.py3-none-any.whl 
+az extension add --source ~/Downloads/show_deployment-0.0.9-py2.py3-none-any.whl 
 ```
 
 ## Running
@@ -50,6 +50,14 @@ az group deployment watch --resource-group your-resource-group --name some-deplo
 
 
 ## Changelog
+
+### 2020-08-22 v0.09
+
+FIX: `expecting value` error executing `['/opt/az/bin/python3', '-m', 'azure.cli', 'group', 'deployment', 'operation', 'list', '-g', 'slsyn1', '-n', 'storageRoleDeploymentResource', '--output', 'json']`
+
+Converted internal commands from `az group deployment...` to new `az deployment group ...` commands
+
+Added `az deployment group watch` as an alias for `az group deployment watch`
 
 ### 2018-07-02 v0.0.7
 
