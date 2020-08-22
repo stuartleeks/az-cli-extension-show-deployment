@@ -19,12 +19,12 @@ Note if you have previously installed and are updating then uninstall first via 
 
 
 ### Download and install
-If you prefer, you can download the extension and then install. The latest release can be downloaded from https://azclishowdeployment.blob.core.windows.net/releases/dist/show_deployment-0.0.7-py2.py3-none-any.whl
+If you prefer, you can download the extension and then install. The latest release can be downloaded from https://azclishowdeployment.blob.core.windows.net/releases/dist/show_deployment-0.0.9-py2.py3-none-any.whl
 
 Then run the following (fixing the path to the downloaded file as required)
 
 ```bash
-az extension add --source ~/Downloads/show_deployment-0.0.9-py2.py3-none-any.whl 
+az extension add --source ~/Downloads/show_deployment-0.0.9-py2.py3-none-any.whl
 ```
 
 ## Running
